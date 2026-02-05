@@ -1,310 +1,276 @@
 # POScake - POS System Skills Bundle
 
-Bộ Claude Code Skills cho hệ thống Point of Sale (POS).
+A comprehensive Claude Code Skills bundle for building modern Point of Sale (POS) systems with Next.js, React, and TypeScript.
 
-## Tổng quan Skills
+## Overview
 
-| # | Skill | Mô tả | Loại |
-|---|-------|-------|------|
-| 1 | **poscake** | Build POS system với Next.js + React + TypeScript | Development |
-| 2 | **pos-payments** | Tích hợp thanh toán: Cash, QR, VNPay, Momo, Stripe | Development |
-| 3 | **pos-reports** | Analytics dashboards, báo cáo doanh thu, RFM, export | Development |
-| 4 | **pos-auth** | Authentication: Email, OAuth, 2FA, Passkeys, RBAC | Development |
-| 5 | **pos-notifications** | In-app, Email, SMS, Push notifications | Development |
-| 6 | **pos-products** | CRUD sản phẩm, variations, tags, combo | API Integration |
-| 7 | **pos-orders** | Quản lý đơn hàng, tracking, tags | API Integration |
-| 8 | **pos-customers** | Quản lý khách hàng, điểm thưởng, level | API Integration |
-| 9 | **pos-inventory** | Lịch sử tồn kho, báo cáo tồn | API Integration |
-| 10 | **pos-warehouses** | Danh mục kho | API Integration |
-| 11 | **pos-stocktake** | Kiểm kê hàng hóa | API Integration |
-| 12 | **pos-geo** | Tra cứu tỉnh/huyện/xã | API Integration |
-| 13 | **pos-webhooks** | Template webhook integration | API Integration |
+POScake provides 13 specialized skills for rapid development of production-ready POS applications:
+- **5 Development Skills**: Build POS features (core system, payments, reports, auth, notifications)
+- **8 API Integration Skills**: Connect to Pancake POS platform (products, orders, customers, inventory, etc.)
 
----
+**Use Cases**: Retail POS, restaurant systems, e-commerce backends, inventory management, multi-payment checkout, analytics dashboards.
+
+## Quick Links
+
+- [Project Overview & PDR](docs/project-overview-pdr.md) - Project goals, requirements, specifications
+- [Codebase Summary](docs/codebase-summary.md) - Detailed overview of all skills
+- [Code Standards](docs/code-standards.md) - Coding conventions and best practices
+- [System Architecture](docs/system-architecture.md) - Architecture patterns and deployment
+
+## Skills Catalog
+
+### Development Skills
+
+| Skill | Description |
+|-------|-------------|
+| **poscake** | Core POS system (products, orders, inventory, reports) |
+| **pos-payments** | Multi-payment integration (Cash, QR, VNPay, Momo, Stripe, etc.) |
+| **pos-reports** | Analytics & reporting (revenue, RFM, export Excel/PDF/CSV) |
+| **pos-auth** | Authentication (email, OAuth, 2FA, passkeys, RBAC) |
+| **pos-notifications** | Multi-channel notifications (in-app, email, SMS, push) |
+
+### API Integration Skills
+
+| Skill | Description |
+|-------|-------------|
+| **pos-products** | Product management API (CRUD, variations, tags, combos) |
+| **pos-orders** | Order management API (orders, tracking, shipments, returns) |
+| **pos-customers** | Customer management API (CRUD, loyalty points, levels) |
+| **pos-inventory** | Inventory tracking API (history, analytics) |
+| **pos-warehouses** | Warehouse management API |
+| **pos-stocktake** | Stock counting API |
+| **pos-geo** | Geographic data API (Vietnam provinces, districts, communes) |
+| **pos-webhooks** | Webhook integration templates |
+
+## Technology Stack
+
+**Frontend**: Next.js 14, React 18, TypeScript, Tailwind CSS, shadcn/ui, Zustand, React Hook Form + Zod
+
+**Backend**: Next.js API Routes, Prisma ORM, Better Auth, PostgreSQL/MySQL/SQLite
+
+**Integrations**: VNPay, Momo, ZaloPay, Stripe, PayOS, SePay, Resend, SendGrid, Twilio, Firebase FCM
 
 ## Quick Start
 
-### 1. Cài đặt Skills
+### 1. Installation
 
 ```bash
-# Clone repository
 git clone https://github.com/nguyenlanh282/poscake.git
+cd poscake
 
-# Copy skills vào project
-cp -r poscake/skills/* .claude/skills/
-cp -r poscake/poscake .claude/skills/
-
-# Hoặc copy vào global
-cp -r poscake/skills/* ~/.claude/skills/
+# Install skills
+cp -r skills/* ~/.claude/skills/
+cp -r poscake ~/.claude/skills/
 ```
 
-### 2. Cấu hình Environment
-
-Tạo file `.env` trong project:
-
-```env
-# === Pancake POS API ===
-POS_API_KEY=your_api_key
-SHOP_ID=your_shop_id
-POS_BASE_URL=https://pos.pages.fm/api/v1
-
-# === Database ===
-DATABASE_URL=postgresql://user:pass@localhost:5432/pos_db
-
-# === Payment Gateways ===
-# VNPay
-VNPAY_TMN_CODE=
-VNPAY_HASH_SECRET=
-VNPAY_URL=https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-
-# Momo
-MOMO_PARTNER_CODE=
-MOMO_ACCESS_KEY=
-MOMO_SECRET_KEY=
-
-# ZaloPay
-ZALOPAY_APP_ID=
-ZALOPAY_KEY1=
-ZALOPAY_KEY2=
-
-# Stripe
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_KEY=
-
-# SePay (VietQR)
-SEPAY_API_KEY=
-SEPAY_MERCHANT_ID=
-
-# PayOS
-PAYOS_CLIENT_ID=
-PAYOS_API_KEY=
-PAYOS_CHECKSUM_KEY=
-```
-
-### 3. Khởi tạo Project mới (Development)
+### 2. Create POS Application
 
 ```bash
-# Tạo Next.js project
+# Initialize Next.js
 npx create-next-app@latest my-pos --typescript --tailwind --app
 cd my-pos
 
-# Cài đặt dependencies
-npm install prisma @prisma/client zustand react-hook-form zod
-npm install @tanstack/react-query recharts xlsx
+# Install dependencies
+npm install prisma @prisma/client zustand react-hook-form zod @tanstack/react-query recharts xlsx better-auth
 npx shadcn@latest init
 
-# Setup Prisma
+# Setup database
 npx prisma init
+node ~/.claude/skills/poscake/scripts/generate-schema.js prisma/schema.prisma
+npx prisma generate && npx prisma db push
 
-# Generate schema (dùng script từ poscake skill)
-node .claude/skills/poscake/scripts/generate-schema.js
-
-# Apply database
-npx prisma generate
-npx prisma db push
-
-# Seed sample data
-node .claude/skills/poscake/scripts/seed-data.js
+# Start development
+npm run dev
 ```
 
-### 4. Sử dụng API Skills
+### 3. Environment Variables
+
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/pos_db"
+POS_API_KEY="your_api_key"
+SHOP_ID="your_shop_id"
+BETTER_AUTH_SECRET="your-secret-key"
+BETTER_AUTH_URL="http://localhost:3000"
+```
+
+## Using API Integration Skills
+
+### Read Operations
 
 ```bash
-# Set environment
-export POS_API_KEY="your_key"
+export POS_API_KEY="your_api_key"
 export SHOP_ID="123"
 
-# Đọc dữ liệu
 bash scripts/products.sh list "?page=1&page_size=20"
 bash scripts/orders.sh get "ORDER_ID"
 bash scripts/customers.sh list
-
-# Ghi dữ liệu (cần confirm)
-export CONFIRM_WRITE=YES
-cat product.json | bash scripts/products.sh create
 ```
 
----
+### Write Operations
 
-## Cấu trúc thư mục
+```bash
+export CONFIRM_WRITE=YES
+cat product-data.json | bash scripts/products.sh create
+```
+
+## Directory Structure
 
 ```
 poscake/
-├── poscake/                      # [SKILL] Build POS với Next.js
+├── poscake/                      # Main development skill
 │   ├── SKILL.md
-│   ├── references/
-│   │   ├── products.md           # Product management module
-│   │   ├── orders.md             # Order & payment module
-│   │   ├── inventory.md          # Inventory management
-│   │   ├── reports.md            # Reports & analytics
-│   │   └── database.md           # Prisma schema
-│   ├── scripts/
-│   │   ├── generate-schema.js    # Generate Prisma schema
-│   │   └── seed-data.js          # Seed sample data
+│   ├── references/               # Feature documentation
+│   ├── scripts/                  # Schema generator, seeder
 │   └── assets/
-│       └── receipt-template.html # Receipt printing template
-│
-├── skills/
-│   ├── pos-payments/             # [SKILL] Payment integration
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── cash.md           # Cash payment
-│   │       ├── qr-bank.md        # VietQR, SePay
-│   │       ├── e-wallets.md      # VNPay, Momo, ZaloPay
-│   │       └── card.md           # Stripe, PayOS
-│   │
-│   ├── pos-reports/              # [SKILL] Reports & Analytics
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── revenue.md        # Revenue reports
-│   │       ├── products.md       # Product analytics
-│   │       ├── customers.md      # Customer analytics, RFM
-│   │       ├── inventory.md      # Inventory reports
-│   │       └── export.md         # Excel, PDF, CSV export
-│   │
-│   ├── pos-auth/                 # [SKILL] Authentication
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── email-password.md # Email/password auth
-│   │       ├── oauth.md          # Google, GitHub, Facebook
-│   │       ├── 2fa.md            # TOTP, SMS OTP
-│   │       ├── passkeys.md       # WebAuthn, biometric
-│   │       └── session-rbac.md   # Session, roles, permissions
-│   │
-│   ├── pos-notifications/        # [SKILL] Notifications
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── in-app.md         # Toast, bell, notification center
-│   │       ├── email.md          # Resend, SendGrid
-│   │       ├── sms.md            # Twilio, Vonage
-│   │       ├── push.md           # FCM, Web Push
-│   │       └── use-cases.md      # Order, inventory, marketing
-│   │
-│   ├── pos-products/             # [SKILL] Product API
-│   ├── pos-orders/               # [SKILL] Order API
-│   ├── pos-customers/            # [SKILL] Customer API
-│   ├── pos-inventory/            # [SKILL] Inventory API
-│   ├── pos-warehouses/           # [SKILL] Warehouse API
-│   ├── pos-stocktake/            # [SKILL] Stocktake API
-│   ├── pos-geo/                  # [SKILL] Geo API
-│   └── pos-webhooks/             # [SKILL] Webhook template
-│
-├── scripts/                      # Bash scripts cho API calls
+├── skills/                       # Additional skills (13 total)
+│   ├── pos-payments/
+│   ├── pos-reports/
+│   ├── pos-auth/
+│   └── ...
+├── scripts/                      # API integration scripts
 │   ├── common.sh
 │   ├── products.sh
-│   ├── orders.sh
-│   ├── customers.sh
-│   ├── inventory.sh
-│   ├── warehouses.sh
-│   ├── stocktake.sh
-│   └── geo.sh
-│
-├── openapi-pos.json              # OpenAPI specification
-└── README.md                     # This file
+│   └── ...
+├── docs/                         # Project documentation
+│   ├── project-overview-pdr.md
+│   ├── codebase-summary.md
+│   ├── code-standards.md
+│   └── system-architecture.md
+├── openapi-pos.json              # Pancake POS API spec
+└── README.md
 ```
 
----
+## Key Features
 
-## Chi tiết từng Skill
+### Product Management
+CRUD operations, category hierarchy, variants, barcode, bulk import/export, stock tracking
 
-### 1. poscake (Development)
+### Order Processing
+Shopping cart, checkout, multiple payments, status tracking, invoices, receipts
 
-Build hệ thống POS hoàn chỉnh với:
-- **Products**: CRUD, categories, variants, barcode, bulk import
-- **Orders**: Cart, checkout, payments, invoices
-- **Inventory**: Stock tracking, import orders, low stock alerts
-- **Reports**: Dashboard, revenue, top products, export
+### Inventory Management
+Real-time tracking, low stock alerts, movement history, multi-warehouse, stocktaking
 
-**Tech Stack**: Next.js 14, React, TypeScript, Tailwind, Prisma, Zustand, shadcn/ui
+### Payment Integration
+Cash, QR/Bank, e-wallets (VNPay, Momo, ZaloPay), cards (Stripe, PayOS), webhooks
 
-### 2. pos-payments (Development)
+### Reports & Analytics
+Revenue reports, product analytics, RFM segmentation, inventory reports, Excel/PDF/CSV export
 
-Tích hợp các phương thức thanh toán:
+### Authentication
+Email/password, OAuth (Google, GitHub, Facebook), 2FA (TOTP, SMS), passkeys, RBAC
 
-| Method | Provider | Features |
-|--------|----------|----------|
-| Cash | - | Tính tiền thừa, mở két tiền |
-| QR/Bank | VietQR, SePay | Generate QR, auto-detect payment |
-| E-Wallet | VNPay | Redirect, IPN webhook |
-| E-Wallet | Momo | QR, callback |
-| E-Wallet | ZaloPay | Order API, callback |
-| Card | Stripe | Payment Intent, Elements |
-| Card | PayOS | Thẻ nội địa Napas |
+### Notifications
+In-app (real-time), email, SMS, push (mobile & web), user preferences
 
-### 3. pos-reports (Development)
+## Example Usage
 
-Build analytics dashboards và báo cáo:
+### Product Management Page
 
-| Report Type | Features |
-|-------------|----------|
-| Revenue | Daily/weekly/monthly, period comparison, payment breakdown |
-| Products | Top sellers, category performance, margin analysis, slow movers |
-| Customers | New vs returning, RFM segmentation, retention cohorts, LTV |
-| Inventory | Stock levels, turnover rate, dead stock, reorder suggestions |
-| Export | Excel (xlsx), PDF (jspdf), CSV, scheduled reports |
+```typescript
+// app/products/page.tsx
+import { ProductService } from '@/lib/services/product.service';
 
-### 4. pos-auth (Development)
+export default async function ProductsPage() {
+  const products = await ProductService.findAll({ isActive: true });
+  return <ProductList products={products} />;
+}
+```
 
-Authentication với Better Auth framework:
+### Payment Processing
 
-| Method | Features |
-|--------|----------|
-| Email/Password | Register, login, verification, password reset |
-| OAuth | Google, GitHub, Facebook, Discord |
-| 2FA/MFA | TOTP (Google Authenticator), SMS OTP, backup codes |
-| Passkeys | WebAuthn, fingerprint, Face ID |
-| Session/RBAC | Session management, roles, permissions, rate limiting |
+```typescript
+// app/api/payments/route.ts
+import { PaymentService } from '@/lib/services/payment.service';
 
-### 5. pos-notifications (Development)
+export async function POST(request: Request) {
+  const { orderId, method, amount } = await request.json();
+  const payment = await PaymentService.process({ orderId, method, amount });
+  return Response.json({ success: true, data: payment });
+}
+```
 
-Multi-channel notifications:
+## Security & Safety
 
-| Channel | Provider | Features |
-|---------|----------|----------|
-| In-App | Sonner, SSE | Toast, bell icon, notification center, real-time |
-| Email | Resend, SendGrid | React Email templates, transactional |
-| SMS | Twilio, Vonage | Order alerts, OTP, marketing |
-| Push | FCM, Web Push | Mobile & browser notifications |
+**Guardrails:**
+- Write operations require `CONFIRM_WRITE=YES`
+- API keys via environment variables only
+- HTTPS required for all external communications
 
-Use cases: Order updates, inventory alerts, daily reports, promotions, birthday.
+**Features:**
+- Webhook signature verification
+- SQL injection prevention (Prisma ORM)
+- Input validation (Zod schemas)
+- Rate limiting, session management, password hashing
 
-### 6-13. API Integration Skills
+## Documentation
 
-Tích hợp với Pancake POS API (`pos.pages.fm/api/v1`):
+**For Users:**
+- [Quick Start Guide](docs/project-overview-pdr.md)
+- [Skills Reference](docs/codebase-summary.md)
+- [API Documentation](openapi-pos.json)
 
-| Skill | Endpoints |
-|-------|-----------|
-| pos-products | `/products`, `/variations`, `/tags_products`, `/combo_products` |
-| pos-orders | `/orders`, `/order_source`, `/orders/tags`, `/arrange_shipment` |
-| pos-customers | `/customers`, `/point_logs`, `/customer_levels` |
-| pos-inventory | `/inventory_histories`, `/inventory_analytics` |
-| pos-warehouses | `/warehouses` |
-| pos-stocktake | `/stocktakings` |
-| pos-geo | `/geo/provinces`, `/geo/districts`, `/geo/communes` |
+**For Developers:**
+- [Code Standards](docs/code-standards.md)
+- [System Architecture](docs/system-architecture.md)
+- [Database Schema](poscake/references/database.md)
 
----
+**Each Skill:**
+- `SKILL.md` for overview
+- `references/` for detailed documentation
 
-## Safety & Security
+## Production Deployment
 
-### API Skills
-- **Read**: Không cần confirm
-- **Write**: Yêu cầu `CONFIRM_WRITE=YES`
-- **API Key**: Không commit vào repo
+**Vercel (Recommended):**
+```bash
+npm i -g vercel
+vercel --prod
+```
 
-### Payment Skills
-- Verify webhook signatures
-- Use HTTPS only
-- Store keys in environment variables
-- Test with sandbox/test mode first
+**Docker:**
+```bash
+docker build -t pos-app .
+docker run -p 3000:3000 --env-file .env pos-app
+```
 
----
+**Self-Hosted:**
+```bash
+npm run build
+npm start
+```
 
-## License
+## Contributing
 
-MIT
+Contributions welcome! See [Code Standards](docs/code-standards.md) before submitting PRs.
+
+## Support
+
+- Documentation: `docs/` directory
+- Issues: [GitHub Issues](https://github.com/nguyenlanh282/poscake/issues)
+- API Reference: `openapi-pos.json`
+- Examples: Each skill's `references/` directory
 
 ## Links
 
-- **Repository**: https://github.com/nguyenlanh282/poscake
-- **Pancake POS API**: https://pos.pages.fm/api/v1
+- Repository: https://github.com/nguyenlanh282/poscake
+- Pancake POS API: https://pos.pages.fm/api/v1
+- Next.js: https://nextjs.org
+- Prisma: https://www.prisma.io
+- Better Auth: https://better-auth.com
+
+## License
+
+MIT License
+
+## Version
+
+**1.0.0** (February 2026)
+
+**Includes:**
+- 13 Skills (5 Development + 8 API Integration)
+- Complete documentation
+- Production-ready templates
+- Database schema generator
+- Sample data seeder
+- API integration scripts
+- OpenAPI specification
