@@ -10,14 +10,15 @@ Bộ Claude Code Skills cho hệ thống Point of Sale (POS).
 | 2 | **pos-payments** | Tích hợp thanh toán: Cash, QR, VNPay, Momo, Stripe | Development |
 | 3 | **pos-reports** | Analytics dashboards, báo cáo doanh thu, RFM, export | Development |
 | 4 | **pos-auth** | Authentication: Email, OAuth, 2FA, Passkeys, RBAC | Development |
-| 5 | **pos-products** | CRUD sản phẩm, variations, tags, combo | API Integration |
-| 6 | **pos-orders** | Quản lý đơn hàng, tracking, tags | API Integration |
-| 7 | **pos-customers** | Quản lý khách hàng, điểm thưởng, level | API Integration |
-| 8 | **pos-inventory** | Lịch sử tồn kho, báo cáo tồn | API Integration |
-| 9 | **pos-warehouses** | Danh mục kho | API Integration |
-| 10 | **pos-stocktake** | Kiểm kê hàng hóa | API Integration |
-| 11 | **pos-geo** | Tra cứu tỉnh/huyện/xã | API Integration |
-| 12 | **pos-webhooks** | Template webhook integration | API Integration |
+| 5 | **pos-notifications** | In-app, Email, SMS, Push notifications | Development |
+| 6 | **pos-products** | CRUD sản phẩm, variations, tags, combo | API Integration |
+| 7 | **pos-orders** | Quản lý đơn hàng, tracking, tags | API Integration |
+| 8 | **pos-customers** | Quản lý khách hàng, điểm thưởng, level | API Integration |
+| 9 | **pos-inventory** | Lịch sử tồn kho, báo cáo tồn | API Integration |
+| 10 | **pos-warehouses** | Danh mục kho | API Integration |
+| 11 | **pos-stocktake** | Kiểm kê hàng hóa | API Integration |
+| 12 | **pos-geo** | Tra cứu tỉnh/huyện/xã | API Integration |
+| 13 | **pos-webhooks** | Template webhook integration | API Integration |
 
 ---
 
@@ -171,6 +172,15 @@ poscake/
 │   │       ├── passkeys.md       # WebAuthn, biometric
 │   │       └── session-rbac.md   # Session, roles, permissions
 │   │
+│   ├── pos-notifications/        # [SKILL] Notifications
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── in-app.md         # Toast, bell, notification center
+│   │       ├── email.md          # Resend, SendGrid
+│   │       ├── sms.md            # Twilio, Vonage
+│   │       ├── push.md           # FCM, Web Push
+│   │       └── use-cases.md      # Order, inventory, marketing
+│   │
 │   ├── pos-products/             # [SKILL] Product API
 │   ├── pos-orders/               # [SKILL] Order API
 │   ├── pos-customers/            # [SKILL] Customer API
@@ -246,7 +256,20 @@ Authentication với Better Auth framework:
 | Passkeys | WebAuthn, fingerprint, Face ID |
 | Session/RBAC | Session management, roles, permissions, rate limiting |
 
-### 5-12. API Integration Skills
+### 5. pos-notifications (Development)
+
+Multi-channel notifications:
+
+| Channel | Provider | Features |
+|---------|----------|----------|
+| In-App | Sonner, SSE | Toast, bell icon, notification center, real-time |
+| Email | Resend, SendGrid | React Email templates, transactional |
+| SMS | Twilio, Vonage | Order alerts, OTP, marketing |
+| Push | FCM, Web Push | Mobile & browser notifications |
+
+Use cases: Order updates, inventory alerts, daily reports, promotions, birthday.
+
+### 6-13. API Integration Skills
 
 Tích hợp với Pancake POS API (`pos.pages.fm/api/v1`):
 
