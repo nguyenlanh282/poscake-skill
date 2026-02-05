@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: monospace; width: 80mm; font-size: 12px; }
+    .header { text-align: center; border-bottom: 1px dashed #000; padding-bottom: 8px; margin-bottom: 8px; }
+    .store-name { font-size: 16px; font-weight: bold; }
+    .info { font-size: 10px; }
+    .order-info { margin-bottom: 8px; }
+    .items { border-bottom: 1px dashed #000; padding-bottom: 8px; margin-bottom: 8px; }
+    .item { display: flex; justify-content: space-between; margin: 4px 0; }
+    .item-name { flex: 1; }
+    .item-qty { width: 30px; text-align: center; }
+    .item-price { width: 80px; text-align: right; }
+    .totals { margin-bottom: 8px; }
+    .total-line { display: flex; justify-content: space-between; margin: 2px 0; }
+    .grand-total { font-weight: bold; font-size: 14px; border-top: 1px solid #000; padding-top: 4px; }
+    .footer { text-align: center; font-size: 10px; margin-top: 16px; }
+    .barcode { text-align: center; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="store-name">{{STORE_NAME}}</div>
+    <div class="info">{{STORE_ADDRESS}}</div>
+    <div class="info">Tel: {{STORE_PHONE}}</div>
+  </div>
+
+  <div class="order-info">
+    <div>Order: {{ORDER_NUMBER}}</div>
+    <div>Date: {{ORDER_DATE}}</div>
+    <div>Cashier: {{CASHIER_NAME}}</div>
+    {{#if CUSTOMER_NAME}}<div>Customer: {{CUSTOMER_NAME}}</div>{{/if}}
+  </div>
+
+  <div class="items">
+    {{#each ITEMS}}
+    <div class="item">
+      <span class="item-name">{{name}}</span>
+      <span class="item-qty">x{{quantity}}</span>
+      <span class="item-price">{{formatCurrency price}}</span>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="totals">
+    <div class="total-line">
+      <span>Subtotal:</span>
+      <span>{{formatCurrency SUBTOTAL}}</span>
+    </div>
+    {{#if DISCOUNT}}
+    <div class="total-line">
+      <span>Discount:</span>
+      <span>-{{formatCurrency DISCOUNT}}</span>
+    </div>
+    {{/if}}
+    {{#if TAX}}
+    <div class="total-line">
+      <span>Tax ({{TAX_RATE}}%):</span>
+      <span>{{formatCurrency TAX}}</span>
+    </div>
+    {{/if}}
+    <div class="total-line grand-total">
+      <span>TOTAL:</span>
+      <span>{{formatCurrency TOTAL}}</span>
+    </div>
+    <div class="total-line">
+      <span>Payment ({{PAYMENT_METHOD}}):</span>
+      <span>{{formatCurrency PAYMENT_AMOUNT}}</span>
+    </div>
+    {{#if CHANGE}}
+    <div class="total-line">
+      <span>Change:</span>
+      <span>{{formatCurrency CHANGE}}</span>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="barcode">
+    <svg id="barcode"></svg>
+  </div>
+
+  <div class="footer">
+    <p>Thank you for your purchase!</p>
+    <p>Please keep this receipt for returns.</p>
+  </div>
+</body>
+</html>
