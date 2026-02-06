@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-POScake is a comprehensive Claude Code Skills bundle designed for building and integrating Point of Sale (POS) systems. The bundle provides 13 specialized skills divided into two categories: 5 development skills for building POS applications and 8 API integration skills for connecting with the Pancake POS platform.
+POScake is a comprehensive Claude Code Skills bundle designed for building and integrating Point of Sale (POS) systems. The bundle provides 21 specialized skills divided into two categories: 13 development skills for building POS applications and 8 API integration skills for connecting with the Pancake POS platform.
 
 ## Project Overview
 
@@ -31,7 +31,7 @@ Enable rapid development of modern, production-ready POS systems with built-in i
 
 ### Skills Catalog
 
-#### Development Skills (1-5)
+#### Development Skills (1-13)
 
 **1. poscake**
 - Core POS system development
@@ -66,44 +66,98 @@ Enable rapid development of modern, production-ready POS systems with built-in i
 - SMS alerts (order updates, OTP)
 - Push notifications (mobile and web)
 
-#### API Integration Skills (6-13)
+**6. pos-inventory**
+- Inventory history tracking (import/export movements)
+- Inventory analytics by variation and product
+- Beginning/ending inventory reports
+- Stock value calculations
 
-**6. pos-products**
-- Product CRUD operations
+**7. pos-suppliers**
+- Supplier management (contact info, payment terms)
+- Purchase orders (create, track, fulfill)
+- Supplier debt tracking
+- Purchase order splitting
+
+**8. pos-promotions**
+- Promotion campaigns (discount by product, quantity, order value)
+- Voucher/coupon management
+- Customer-specific offers
+- Bulk promotion operations
+
+**9. pos-employees**
+- Employee/staff management
+- Department organization
+- Sale groups and teams
+
+**10. pos-analytics**
+- Real-time metrics (revenue, orders, conversion)
+- Trend analysis (daily/weekly/monthly patterns)
+- Sales forecasting and predictions
+- Cohort analysis (customer behavior)
+- Geographic analytics (sales by location)
+
+**11. pos-crm**
+- Customer profiles with purchase history
+- RFM segmentation (Recency, Frequency, Monetary)
+- Loyalty programs (points, tiers, rewards)
+- Marketing automation (email/SMS campaigns)
+- Feedback and support ticketing
+
+**12. pos-debt**
+- Customer credit management (credit limits, payment terms)
+- Supplier payables tracking
+- Debt aging reports (30/60/90 days)
+- Payment collection workflows
+- Credit risk scoring
+
+**13. pos-returns**
+- Return policies configuration
+- Return authorization (RMA workflow)
+- Refund processing (original payment, store credit, exchange)
+- Inventory adjustment after returns
+- Return analytics
+
+**14. pos-transfers**
+- Stock transfers between warehouses
+- Approval workflow for transfers
+- Shipping and receiving tracking
+- Transfer costing (FIFO, average)
+- Transfer analytics
+
+#### API Integration Skills (15-21)
+
+**15. pos-products**
+- Product CRUD operations via API
 - Variations management
 - Tags and materials
 - Combo products
-- Inventory by product
+- Inventory by product queries
 
-**7. pos-orders**
+**16. pos-orders**
 - Order management (list, get, create)
 - Order tracking
 - Shipment arrangement
 - Order tags and sources
 - Returned orders
 
-**8. pos-customers**
-- Customer management
+**17. pos-customers**
+- Customer management via API
 - Points and loyalty programs
 - Customer levels/tiers
 
-**9. pos-inventory**
-- Inventory history tracking
-- Inventory analytics
-
-**10. pos-warehouses**
+**18. pos-warehouses**
 - Warehouse directory management
 
-**11. pos-stocktake**
+**19. pos-stocktake**
 - Stock counting operations
 - Stocktaking records
 
-**12. pos-geo**
+**20. pos-geo**
 - Geographic data (provinces, districts, communes)
 - Vietnamese location lookup
 
-**13. pos-webhooks**
-- Webhook integration template
+**21. pos-webhooks**
+- Webhook integration templates
 - Event handling patterns
 
 ### Directory Structure
@@ -382,8 +436,9 @@ FIREBASE_PROJECT_ID=
 
 ## Version History
 
-- **1.0.0** (2024-02): Initial release with 13 skills
-  - 5 Development skills
+- **1.0.0** (February 2026): Initial release with 21 skills
+  - 13 Development skills
   - 8 API Integration skills
   - Complete documentation
   - Production-ready templates
+  - Vietnamese market payment integrations

@@ -33,20 +33,26 @@ POScake is a modular, skill-based architecture designed to enable rapid developm
 ## High-Level Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         POScake Bundle                           │
-│  ┌──────────────────────┐        ┌──────────────────────────┐  │
-│  │ Development Skills   │        │ API Integration Skills   │  │
-│  │ - poscake           │        │ - pos-products          │  │
-│  │ - pos-payments      │        │ - pos-orders            │  │
-│  │ - pos-reports       │        │ - pos-customers         │  │
-│  │ - pos-auth          │        │ - pos-inventory         │  │
-│  │ - pos-notifications │        │ - pos-warehouses        │  │
-│  │                     │        │ - pos-stocktake         │  │
-│  │                     │        │ - pos-geo               │  │
-│  │                     │        │ - pos-webhooks          │  │
-│  └──────────────────────┘        └──────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────┐
+│                         POScake Bundle (21 Skills)                     │
+│  ┌──────────────────────────────┐  ┌──────────────────────────────┐  │
+│  │ Development Skills (13)      │  │ API Integration Skills (8)    │  │
+│  │ 1. poscake                   │  │ 15. pos-products              │  │
+│  │ 2. pos-payments              │  │ 16. pos-orders                │  │
+│  │ 3. pos-reports               │  │ 17. pos-customers             │  │
+│  │ 4. pos-auth                  │  │ 18. pos-warehouses            │  │
+│  │ 5. pos-notifications         │  │ 19. pos-stocktake             │  │
+│  │ 6. pos-inventory             │  │ 20. pos-geo                   │  │
+│  │ 7. pos-suppliers             │  │ 21. pos-webhooks              │  │
+│  │ 8. pos-promotions            │  │                               │  │
+│  │ 9. pos-employees             │  │                               │  │
+│  │ 10. pos-analytics            │  │                               │  │
+│  │ 11. pos-crm                  │  │                               │  │
+│  │ 12. pos-debt                 │  │                               │  │
+│  │ 13. pos-returns              │  │                               │  │
+│  │ 14. pos-transfers            │  │                               │  │
+│  └──────────────────────────────┘  └──────────────────────────────┘  │
+└───────────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐

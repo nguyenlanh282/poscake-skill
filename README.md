@@ -4,11 +4,11 @@ A comprehensive Claude Code Skills bundle for building modern Point of Sale (POS
 
 ## Overview
 
-POScake provides 13 specialized skills for rapid development of production-ready POS applications:
-- **5 Development Skills**: Build POS features (core system, payments, reports, auth, notifications)
-- **8 API Integration Skills**: Connect to Pancake POS platform (products, orders, customers, inventory, etc.)
+POScake provides 21 specialized skills for rapid development of production-ready POS applications:
+- **13 Development Skills**: Build comprehensive POS features
+- **8 API Integration Skills**: Connect to Pancake POS platform
 
-**Use Cases**: Retail POS, restaurant systems, e-commerce backends, inventory management, multi-payment checkout, analytics dashboards.
+**Use Cases**: Retail POS, restaurant systems, e-commerce backends, inventory management, multi-payment checkout, CRM, debt tracking, analytics dashboards.
 
 ## Quick Links
 
@@ -19,7 +19,7 @@ POScake provides 13 specialized skills for rapid development of production-ready
 
 ## Skills Catalog
 
-### Development Skills
+### Development Skills (13)
 
 | Skill | Description |
 |-------|-------------|
@@ -28,8 +28,17 @@ POScake provides 13 specialized skills for rapid development of production-ready
 | **pos-reports** | Analytics & reporting (revenue, RFM, export Excel/PDF/CSV) |
 | **pos-auth** | Authentication (email, OAuth, 2FA, passkeys, RBAC) |
 | **pos-notifications** | Multi-channel notifications (in-app, email, SMS, push) |
+| **pos-inventory** | Inventory tracking (history, analytics, stock value) |
+| **pos-suppliers** | Supplier management & purchase orders |
+| **pos-promotions** | Promotions & vouchers (discounts, campaigns, bulk ops) |
+| **pos-employees** | Employee management (staff, departments, sale groups) |
+| **pos-analytics** | Business intelligence (real-time, trends, forecasting, cohorts) |
+| **pos-crm** | Customer relationship management & loyalty programs |
+| **pos-debt** | Credit management (customer AR, supplier AP, aging) |
+| **pos-returns** | Returns & refunds (RMA workflow, inventory adjustment) |
+| **pos-transfers** | Stock transfers between warehouses |
 
-### API Integration Skills
+### API Integration Skills (8)
 
 | Skill | Description |
 |-------|-------------|
@@ -267,10 +276,10 @@ MIT License
 **1.0.0** (February 2026)
 
 **Includes:**
-- 13 Skills (5 Development + 8 API Integration)
-- Complete documentation
-- Production-ready templates
+- 21 Skills (13 Development + 8 API Integration)
+- Complete documentation (4 core docs + 80+ skill references)
+- Production-ready templates and patterns
 - Database schema generator
 - Sample data seeder
-- API integration scripts
-- OpenAPI specification
+- API integration scripts with guardrails
+- OpenAPI specification (21K+ lines)

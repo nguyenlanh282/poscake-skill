@@ -2,14 +2,14 @@
 
 ## Overview
 
-POScake is a Claude Code Skills bundle for Point of Sale (POS) system development. The codebase consists of 13 modular skills, supporting documentation, API integration scripts, and configuration files. This document provides a comprehensive summary of the entire codebase structure and contents.
+POScake is a Claude Code Skills bundle for Point of Sale (POS) system development. The codebase consists of 21 modular skills, supporting documentation, API integration scripts, and configuration files. This document provides a comprehensive summary of the entire codebase structure and contents.
 
 ## Repository Statistics
 
-- **Total Skills**: 13 (5 Development + 8 API Integration)
-- **Documentation Files**: 37 markdown files
-- **Scripts**: 8 bash scripts + 2 JavaScript utilities
-- **API Specification**: 1 OpenAPI JSON file (795KB)
+- **Total Skills**: 21 (13 Development + 8 API Integration)
+- **Documentation Files**: 80+ markdown files
+- **Scripts**: 11 bash scripts + 2 JavaScript utilities
+- **API Specification**: 1 OpenAPI JSON file (21.8K lines)
 - **Primary Language**: TypeScript/JavaScript (development), Bash (API integration)
 
 ## Core Components
@@ -135,15 +135,228 @@ POScake is a Claude Code Skills bundle for Point of Sale (POS) system developmen
 - `references/push.md`: Mobile and web push
 - `references/use-cases.md`: Common notification scenarios
 
-### 6-13. API Integration Skills
+### 6. Inventory Management Skill: pos-inventory
+
+**Location**: `skills/pos-inventory/`
+
+**Purpose**: Track inventory movements and generate analytics
+
+**Key Features**:
+- Inventory history tracking (import/export/adjustment)
+- Analytics by variation (SKU-level reporting)
+- Analytics by product (aggregated across variants)
+- Beginning/ending inventory calculations
+- Stock value reporting
+
+**Reference Documentation**:
+- `references/inventory-histories.md`: Movement tracking
+- `references/inventory-analytics.md`: Reporting and analysis
+
+**API Script**: `scripts/inventory.sh`
+
+### 7. Supplier Management Skill: pos-suppliers
+
+**Location**: `skills/pos-suppliers/`
+
+**Purpose**: Manage suppliers and purchase orders
+
+**Key Features**:
+- Supplier directory with contact and payment info
+- Purchase order creation and tracking
+- Supplier debt tracking
+- Purchase order status workflow
+- Split purchase orders
+
+**Reference Documentation**:
+- `references/suppliers.md`: Supplier management
+- `references/purchases.md`: Purchase order workflows
+
+**API Script**: `scripts/suppliers.sh`
+
+### 8. Promotion Management Skill: pos-promotions
+
+**Location**: `skills/pos-promotions/`
+
+**Purpose**: Create and manage promotional campaigns
+
+**Promotion Types**:
+1. Discount by product
+2. Discount by quantity (tiered pricing)
+3. Discount by order value
+4. Bonus/gift products
+5. Vouchers and coupons
+
+**Key Features**:
+- Time-bound campaigns
+- Customer segment targeting
+- Warehouse-specific promotions
+- Bulk activation/deactivation
+- Voucher generation
+
+**Reference Documentation**:
+- `references/promotions.md`: Promotion campaigns
+- `references/vouchers.md`: Voucher/coupon system
+
+**API Script**: `scripts/promotions.sh`
+
+### 9. Employee Management Skill: pos-employees
+
+**Location**: `skills/pos-employees/`
+
+**Purpose**: Manage staff and organizational structure
+
+**Key Features**:
+- Employee directory
+- Department organization
+- Sale group assignments
+- User information lookup
+
+**Reference Documentation**:
+- `references/employees.md`: Staff management
+
+**API Script**: `scripts/employees.sh`
+
+### 10. Analytics \u0026 BI Skill: pos-analytics
+
+**Location**: `skills/pos-analytics/`
+
+**Purpose**: Advanced business intelligence and predictive analytics
+
+**Analytics Features**:
+1. **Real-time Metrics**: Live revenue, orders, conversion rates
+2. **Trend Analysis**: Daily/weekly/monthly patterns
+3. **Forecasting**: Sales predictions using moving averages
+4. **Cohort Analysis**: Customer retention tracking
+5. **Geographic Analytics**: Sales by location/region
+
+**Technologies**:
+- WebSocket/SSE for real-time data
+- Recharts for visualization
+- Redis for metric caching
+- Bull for scheduled reports
+
+**Reference Documentation**:
+- `references/realtime-metrics.md`: Live dashboards
+- `references/trend-analysis.md`: Pattern detection
+- `references/forecasting.md`: Predictive models
+- `references/cohort-analysis.md`: Customer behavior
+- `references/geo-analytics.md`: Location analysis
+
+### 11. CRM Skill: pos-crm
+
+**Location**: `skills/pos-crm/`
+
+**Purpose**: Customer relationship management and loyalty
+
+**CRM Features**:
+1. **Customer Profiles**: Complete purchase history
+2. **Segmentation**: RFM-based classification
+3. **Loyalty Programs**: Points, tiers (Bronze/Silver/Gold/Platinum)
+4. **Marketing Automation**: Email/SMS campaigns
+5. **Feedback Collection**: Surveys and reviews
+
+**Loyalty System**:
+- Point earning rules
+- Tier benefits and multipliers
+- Point expiration policies
+- Reward catalog
+
+**Reference Documentation**:
+- `references/customer-profiles.md`: Profile management
+- `references/segmentation.md`: RFM segmentation
+- `references/loyalty.md`: Loyalty programs
+- `references/marketing.md`: Campaign automation
+- `references/feedback.md`: Customer feedback
+
+### 12. Debt Management Skill: pos-debt
+
+**Location**: `skills/pos-debt/`
+
+**Purpose**: Manage customer credit and supplier payables
+
+**Debt Features**:
+1. **Customer Credit**: Credit limits, payment terms
+2. **Supplier Payables**: Purchase invoice tracking
+3. **Aging Reports**: 30/60/90+ day analysis
+4. **Payment Collection**: Reminders and payment plans
+5. **Credit Risk**: Scoring and limit recommendations
+
+**Workflow**:
+- Credit application process
+- Automated aging analysis
+- Collection workflow automation
+- Payment plan management
+
+**Reference Documentation**:
+- `references/customer-credit.md`: AR management
+- `references/supplier-payables.md`: AP management
+- `references/debt-aging.md`: Aging reports
+- `references/payment-collection.md`: Collection workflows
+- `references/credit-risk.md`: Risk management
+
+### 13. Returns Management Skill: pos-returns
+
+**Location**: `skills/pos-returns/`
+
+**Purpose**: Handle product returns and refunds
+
+**Return Features**:
+1. **Return Policies**: Time limits, conditions
+2. **RMA Workflow**: Authorization and approval
+3. **Refund Processing**: Multiple refund methods
+4. **Inventory Adjustment**: Restock or mark damaged
+5. **Return Analytics**: Return rate tracking
+
+**Refund Methods**:
+- Original payment method
+- Store credit/voucher
+- Exchange for different product
+- Partial refunds
+
+**Reference Documentation**:
+- `references/return-policies.md`: Policy configuration
+- `references/rma.md`: Return authorization
+- `references/refunds.md`: Refund processing
+- `references/inventory-adjustment.md`: Stock updates
+- `references/return-analytics.md`: Return analysis
+
+### 14. Stock Transfer Skill: pos-transfers
+
+**Location**: `skills/pos-transfers/`
+
+**Purpose**: Manage stock transfers between warehouses
+
+**Transfer Features**:
+1. **Transfer Requests**: Create transfer orders
+2. **Approval Workflow**: Manager approval for high-value transfers
+3. **Shipping/Receiving**: Track transit and confirm receipt
+4. **Transfer Costing**: FIFO, average cost methods
+5. **Transfer Analytics**: Frequency, lead time, cost analysis
+
+**Transfer Types**:
+- Rebalancing (stock optimization)
+- Replenishment (restock low inventory)
+- Consolidation (merge stock)
+- Emergency (urgent needs)
+
+**Reference Documentation**:
+- `references/transfer-requests.md`: Transfer creation
+- `references/approval-workflow.md`: Approval process
+- `references/shipping-receiving.md`: Transit tracking
+- `references/transfer-costing.md`: Cost allocation
+- `references/transfer-analytics.md`: Transfer analysis
+
+### 15-21. API Integration Skills
 
 **Location**: `skills/pos-[name]/`
 
 **API Base URL**: `https://pos.pages.fm/api/v1`
 
-**Authentication**: API key via query parameter
+**Authentication**: API key via query parameter (`api_key`)
 
-#### pos-products
+**Common Pattern**: All API skills use bash scripts with built-in safety guardrails
+
+#### 15. pos-products
 **Endpoints**:
 - `/shops/{SHOP_ID}/products`: Product CRUD
 - `/shops/{SHOP_ID}/products/variations`: Variant management
@@ -153,9 +366,9 @@ POScake is a Claude Code Skills bundle for Point of Sale (POS) system developmen
 
 **Script**: `scripts/products.sh`
 
-#### pos-orders
+#### 16. pos-orders
 **Endpoints**:
-- `/shops/{SHOP_ID}/orders`: Order management
+- `/shops/{SHOP_ID}/orders`: Order management via API
 - `/shops/{SHOP_ID}/order_source`: Order sources
 - `/shops/{SHOP_ID}/orders/tags`: Order tags
 - `/shops/{SHOP_ID}/orders/get_tracking_url`: Shipment tracking
@@ -164,7 +377,7 @@ POScake is a Claude Code Skills bundle for Point of Sale (POS) system developmen
 
 **Script**: `scripts/orders.sh`
 
-#### pos-customers
+#### 17. pos-customers
 **Endpoints**:
 - `/shops/{SHOP_ID}/customers`: Customer CRUD
 - Customer points and loyalty management
@@ -179,27 +392,29 @@ POScake is a Claude Code Skills bundle for Point of Sale (POS) system developmen
 
 **Script**: `scripts/inventory.sh`
 
-#### pos-warehouses
+#### 18. pos-warehouses
 **Endpoints**:
-- `/shops/{SHOP_ID}/warehouses`: Warehouse directory
+- `/shops/{SHOP_ID}/warehouses`: Warehouse directory via API
 
 **Script**: `scripts/warehouses.sh`
 
-#### pos-stocktake
+#### 19. pos-stocktake
 **Endpoints**:
 - `/shops/{SHOP_ID}/stocktakings`: Stocktaking operations
 
 **Script**: `scripts/stocktake.sh`
 
-#### pos-geo
+#### 20. pos-geo
 **Endpoints**:
 - `/geo/provinces`: Vietnamese provinces
 - `/geo/districts`: Districts by province
-- `/geo/communes`: Communes by district
+- `/geo/communes`: Communes (wards) by district
 
 **Script**: `scripts/geo.sh`
 
-#### pos-webhooks
+**Note**: Geographic data for Vietnamese address system
+
+#### 21. pos-webhooks
 **Purpose**: Template and design patterns for webhook integration
 
 **Note**: OpenAPI spec doesn't currently include webhook endpoints; this skill provides implementation guidance
@@ -217,10 +432,13 @@ POScake is a Claude Code Skills bundle for Point of Sale (POS) system developmen
 ```bash
 # Read operations (no confirmation required)
 bash scripts/products.sh list "?page=1&page_size=20"
+bash scripts/inventory.sh histories
+bash scripts/suppliers.sh list
 
 # Write operations (requires CONFIRM_WRITE=YES)
 export CONFIRM_WRITE=YES
 cat payload.json | bash scripts/products.sh create
+cat update.json | bash scripts/promotions.sh update "PROMO_ID"
 ```
 
 **Environment Variables**:
@@ -247,18 +465,32 @@ cat payload.json | bash scripts/products.sh create
 - **OrderItem**: Line items with pricing
 - **Notification**: Multi-channel notifications
 - **NotificationPreference**: User notification settings
+- **Payment**: Payment transactions and methods
+- **Promotion**: Promotional campaigns
+- **Voucher**: Discount vouchers and coupons
+- **Supplier**: Supplier directory
+- **PurchaseOrder**: Purchase orders from suppliers
+- **Return**: Product returns and RMA
+- **Transfer**: Stock transfers between warehouses
+- **DebtAccount**: Customer credit and supplier payables
+- **LoyaltyTransaction**: Points earning and redemption
 
 **Enums**:
 - `Role`: ADMIN, MANAGER, STAFF, CASHIER
 - `OrderStatus`: PENDING, PROCESSING, COMPLETED, CANCELLED
 - `PaymentStatus`: UNPAID, PARTIAL, PAID, REFUNDED
+- `PaymentMethod`: cash, bank_transfer, vnpay, momo, zalopay, card
+- `ReturnStatus`: pending, approved, rejected, received, processing, completed
+- `TransferStatus`: draft, pending, approved, shipped, in_transit, received, completed
+- `CustomerSegment`: champion, loyal, potential, new, at_risk, lost
+- `LoyaltyTier`: bronze, silver, gold, platinum
 
 ## Configuration Files
 
 ### OpenAPI Specification
 **File**: `openapi-pos.json`
 
-**Size**: 795,236 bytes
+**Lines**: 21,773
 
 **Version**: OpenAPI 3.1.0
 
@@ -533,12 +765,14 @@ src/
 ### Planned Enhancements
 1. Mobile POS application (React Native)
 2. Offline mode with sync
-3. Multi-branch management
-4. Advanced inventory forecasting
-5. AI-powered recommendations
-6. Advanced promotion engine
-7. Employee time tracking
-8. Customer self-checkout
+3. Multi-branch management dashboard
+4. Advanced inventory forecasting with AI
+5. AI-powered product recommendations
+6. Advanced promotion engine with A/B testing
+7. Employee time tracking and shift management
+8. Customer self-checkout kiosks
+9. Integration with more payment gateways
+10. Advanced reporting with custom report builder
 
 ## License
 
@@ -546,4 +780,4 @@ MIT License
 
 ## Last Updated
 
-February 2026 (v1.0.0)
+February 2026 (v1.0.0 - 21 Skills)
